@@ -1,13 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import { MyContext } from "@/context/context";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { globalUser, setGlobalUser } = useContext(MyContext);
+
+  const { successNotify, errorNotify } = useContext(MyContext);
   const [user, setUser] = React.useState({
     email: "",
     password: "",
@@ -22,7 +26,10 @@ export default function LoginPage() {
       console.log("Login success", response.data);
       // const mailResponse = await axios.get("/api/users/testmail");
       // console.log(mailResponse);
-      toast.success("Login success");
+      setGlobalUser({
+        email: user.email,
+        password: user.password,
+      });
       router.push("/profile");
     } catch (error) {
       console.log("Login failed", error.message);
@@ -40,8 +47,13 @@ export default function LoginPage() {
     }
   }, [user]);
 
+  useEffect(() => {
+    toast.success("Successfully logged out");
+  }, []);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      <Toaster />
       <h1>{loading ? "Processing" : "Login"}</h1>
       <hr />
 

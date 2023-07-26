@@ -1,17 +1,19 @@
 "use client";
 import axios from "axios";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import toast, { Toaster } from "react-hot-toast";
+import { MyContext } from "@/context/context";
 
 export default function ProfilePage() {
   const router = useRouter();
+  const { globalUser, setGlobalUser } = useContext(MyContext);
+
   const [userData, setUserData] = useState("nothing");
   const logout = async () => {
     try {
       const response = await axios.get("/api/users/logout");
-      toast.success("Logout successful", response.data);
       router.push("/login");
     } catch (error) {
       console.log(error.message);
@@ -32,11 +34,16 @@ export default function ProfilePage() {
   };
 
   useEffect(() => {
+    if (globalUser.username != "") {
+      console.log(globalUser);
+      toast.success(`Hello user ${globalUser.email}`);
+    }
     getUserDetails();
   }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
+      <Toaster />
       <h1>Profile</h1>
       <hr />
       <p>Profile page</p>
