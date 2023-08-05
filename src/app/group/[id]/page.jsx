@@ -9,9 +9,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function page({ params }) {
-  const [groupId, setGroupId] = useState();
-  const [members, setMembers] = useState([]);
-  const [transactions, setTransactions] = useState([]);
+  const [groupId, setGroupId] = React.useState();
+  const [members, setMembers] = React.useState([]);
+  const [transactions, setTransactions] = React.useState([]);
 
   const getAllGroupMembers = async () => {
     const response = await axios.post("/api/group/getallgroupmembers", {
@@ -30,7 +30,7 @@ export default function page({ params }) {
     setTransactions(response.data.data);
     console.log(transactions);
   };
-  useEffect(() => {
+  React.useEffect(() => {
     getAllGroupMembers();
     getAllTransactions();
     console.log(transactions);
