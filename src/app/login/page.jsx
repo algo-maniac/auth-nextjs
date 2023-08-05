@@ -24,13 +24,14 @@ export default function LoginPage() {
       setLoading(true);
       const response = await axios.post("/api/users/login", user);
       console.log("Login success", response.data);
+      const id = response.data.data._id;
       // const mailResponse = await axios.get("/api/users/testmail");
       // console.log(mailResponse);
       setGlobalUser({
         email: user.email,
         password: user.password,
       });
-      router.push("/profile");
+      router.push(`/profile/${id}`);
     } catch (error) {
       console.log("Login failed", error.message);
       toast.error(error.message);
@@ -48,27 +49,35 @@ export default function LoginPage() {
   }, [user]);
 
   useEffect(() => {
-    toast.success("Successfully logged out");
+    if (globalUser.email != "") {
+      toast.success("Successfully logged out", { duration: 5000 });
+    }
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <Toaster />
-      <h1>{loading ? "Processing" : "Login"}</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen py-2 font-serif">
+      <Toaster position="top-right" />
+      <h1 className="bg-slate-400 text-4xl p-4 mb-4 rounded-xl text-slate-950 font-bold">
+        {loading ? "Processing" : "Login"}
+      </h1>
       <hr />
 
-      <label htmlFor="email">email</label>
+      <label htmlFor="email" className="text-xl">
+        Email
+      </label>
       <input
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
+        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black min-w-[300px]"
         id="email"
         type="text"
         value={user.email}
         onChange={(e) => setUser({ ...user, email: e.target.value })}
         placeholder="email"
       />
-      <label htmlFor="password">password</label>
+      <label htmlFor="password" className="text-xl">
+        Password
+      </label>
       <input
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
+        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black min-w-[300px]"
         id="password"
         type="password"
         value={user.password}
@@ -77,7 +86,7 @@ export default function LoginPage() {
       />
       <button
         onClick={onLogin}
-        className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
+        className="bg-slate-400 text-lg p-2 my-4 rounded-xl text-slate-950 font-bold hover:text-white hover:bg-slate-700"
       >
         Login here
       </button>

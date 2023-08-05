@@ -11,7 +11,7 @@ export async function middleware(request) {
     return NextResponse.redirect(new URL("/login", request.nextUrl));
   }
   if ((path === "/login" || path === "/signup") && token) {
-    return NextResponse.redirect(new URL("/profile", request.nextUrl));
+    return NextResponse.redirect(new URL(`/profile/${id}`, request.nextUrl));
   }
 }
 

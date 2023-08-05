@@ -34,16 +34,15 @@ export default function ProfilePage() {
   };
 
   useEffect(() => {
-    if (globalUser.username != "") {
-      console.log(globalUser);
-      toast.success(`Hello user ${globalUser.email}`);
+    if (globalUser.email != "") {
+      toast.success(`Hello user ${globalUser.email}`, { duration: 5000 });
     }
     getUserDetails();
   }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <Toaster />
+      <Toaster position="top-right" />
       <h1>Profile</h1>
       <hr />
       <p>Profile page</p>
