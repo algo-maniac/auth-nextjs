@@ -8,7 +8,7 @@ import TransactionIcon from "./TransactionIcon";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function page({ params }) {
+export default function Group({ params }) {
   const [groupId, setGroupId] = React.useState();
   const [members, setMembers] = React.useState([]);
   const [transactions, setTransactions] = React.useState([]);
