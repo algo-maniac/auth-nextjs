@@ -73,12 +73,7 @@ export default function Group({ params }) {
               <TransactionIcon
                 key={index}
                 transaction_name={value.transaction_name}
-                user1_email={value.user1_transactions.email}
-                user1_val={value.user1_transactions.value}
-                user2_email={value.user2_transactions.email}
-                user2_val={value.user2_transactions.value}
-                user3_email={value.user3_transactions.email}
-                user3_val={value.user3_transactions.value}
+                user_transactions={value.user_transactions}
               />
             );
           })}

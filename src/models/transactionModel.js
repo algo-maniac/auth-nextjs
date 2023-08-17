@@ -1,5 +1,9 @@
 import mongoose, { mongo } from "mongoose";
 
+const userInfoSchema = new mongoose.Schema({
+  email: { type: String },
+  value: { type: Number },
+});
 const transactionSchema = new mongoose.Schema({
   group_id: {
     type: String,
@@ -7,18 +11,7 @@ const transactionSchema = new mongoose.Schema({
   transaction_name: {
     type: String,
   },
-  user1_transactions: {
-    email: { type: String },
-    value: { type: String, required: [true, "Please provide a value"] },
-  },
-  user2_transactions: {
-    email: { type: String },
-    value: { type: String, required: [true, "Please provide a value"] },
-  },
-  user3_transactions: {
-    email: { type: String },
-    value: { type: String, required: [true, "Please provide a value"] },
-  },
+  user_transactions: [userInfoSchema],
 });
 
 const Transaction =

@@ -12,7 +12,7 @@ export default function AddMember({ id }) {
   });
 
   const submitHandler = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     console.log(member);
     const response = await axios.post("/api/group/addmember", member);
     console.log(response.data.data);

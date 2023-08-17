@@ -8,13 +8,16 @@ export default function GroupIcon({ groupname, groupdescription }) {
   const [group, setGroup] = useState({});
   const router = useRouter();
   const goToGroup = async () => {
-    console.log(groupname);
+    // console.log(groupname);
     setGroup({
       ...group,
       groupname: groupname,
       groupdescription: groupdescription,
     });
-    const response = await axios.post("/api/group/getagroup", group);
+    // console.log(group);
+    const response = await axios.post("/api/group/getagroup", {
+      name: groupname,
+    });
     console.log(response.data);
     const id = response.data.data;
     router.push(`/group/${id}`);

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { MyContext } from "@/context/context";
 
 export default function UserProfile({ params }) {
@@ -30,9 +31,11 @@ export default function UserProfile({ params }) {
 
   useEffect(() => {
     getUser();
+    toast.success("Successfully logged In", { duration: 5000 });
   }, []);
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 font-serif">
+      <Toaster position="top-right" />
       <h1 className="bg-slate-400 text-4xl p-4 mb-4 rounded-xl text-slate-950 font-bold">
         Profile
       </h1>

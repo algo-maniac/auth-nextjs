@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EachMember from "./EachMember";
 import axios from "axios";
 // import React, { useState, useEffect } from "react";
@@ -10,13 +10,11 @@ export default function AddTransactionItem({ id }) {
   const [transactionDetails, setTransactionDetails] = useState({
     transaction_name: "",
     group_id: id,
-    user1_transactions: { email: "", value: "" },
-    user2_transactions: { email: "", value: "" },
-    user3_transactions: { email: "", value: "" },
+    user_transactions: [{ email: "", value: "" }],
   });
 
   const submitHandler = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     console.log(transactionDetails);
     const response = await axios.post(
       "/api/group/addtransaction",
@@ -28,7 +26,11 @@ export default function AddTransactionItem({ id }) {
     e.preventDefault();
     console.log(memberSize);
     setMemberSize(memberSize + 1);
+    let array = transactionDetails.user_transactions;
+    array.push({ email: "", value: "" });
+    setTransactionDetails({ ...transactionDetails, user_transactions: array });
   };
+
   return (
     <div className="border-2 m-6 rounded-2xl bg-slate-950 flex-col justify-center">
       <div
@@ -53,7 +55,7 @@ export default function AddTransactionItem({ id }) {
           />
         </div>
 
-        <EachMember
+        {/* <EachMember
           transactionDetails={transactionDetails}
           setTransactionDetails={setTransactionDetails}
           memberId="1"
@@ -67,13 +69,24 @@ export default function AddTransactionItem({ id }) {
           transactionDetails={transactionDetails}
           setTransactionDetails={setTransactionDetails}
           memberId="3"
-        />
-        {/* <button
+        /> */}
+
+        {transactionDetails.user_transactions.map((e, index) => {
+          return (
+            <EachMember
+              transactionDetails={transactionDetails}
+              setTransactionDetails={setTransactionDetails}
+              memberId={index}
+              key={index}
+            />
+          );
+        })}
+        <button
           className="h-12 text-2xl ml-[10%] border-4 rounded-xl w-[80%] cursor-pointer relative my-4"
           onClick={addMember}
         >
           Add Member
-        </button> */}
+        </button>
         <button
           className="h-12 text-2xl ml-[30%] border-4 rounded-xl w-[100px] cursor-pointer relative my-4"
           onClick={submitHandler}

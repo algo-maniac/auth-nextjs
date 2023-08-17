@@ -9,7 +9,7 @@ export async function POST(request) {
     const reqBody = await request.json();
     console.log(reqBody);
     const name = reqBody.name;
-    const group = await Group.findOne({ name });
+    const group = await Group.findOne({ groupname: name });
     if (!group) {
       return NextResponse.json(
         {
